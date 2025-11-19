@@ -50,77 +50,89 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{ flex: 1 }}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ 
-          flex: 1, 
-          backgroundColor: '#ffffff',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
+<KeyboardAvoidingView
+  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+  style={{ flex: 1 }}
+  keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+>
+  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <View style={{ 
+      flex: 1, 
+      backgroundColor: '#ffffff',
+      justifyContent: 'center',
+      alignItems: 'center',
+    
+    }}>
+      
+      <Box
+        bg="white"
+      
+        shadow={4}
+        rounded="lg"
+        maxWidth="85%"
+        minWidth="85%"
+     
+      >
+        <Center>
+          <Text style={style.title}>Login</Text>
           
           <Box
             bg="white"
-            style={style.card}
             shadow={4}
             rounded="lg"
-            maxWidth="90%"
-            minWidth="90%"
+            width="90%"
+            marginTop={4}
+            marginBottom={3}
+            padding={2}
           >
-            <Center>
-              <Text style={style.title}> Login </Text>
-              
-              <Box
-                bg="white"
-                style={style.card}
-                shadow={4}
-                rounded="lg"
-                maxWidth="90%"
-                minWidth="90%"
-                padding={2}
-              >
-                <TextInput
-                  placeholder="Username"
-                  style={{maxWidth:"90%", borderRadius:1, borderColor:"black"}}
-                  value={userName}
-                  onChangeText={handleUsernameChange}
-                  onSubmitEditing={handleDoneAction}
-                />
-              </Box>
-              
-              <Box
-                bg="white"
-                style={style.card}
-                shadow={4}
-                rounded="lg"
-                maxWidth="90%"
-                minWidth="90%"
-                padding={2}
-              >
-                <TextInput
-                  placeholder="Password"
-                  w="85%"
-                  value={userPassword}
-                  secureTextEntry={true}
-                  onChangeText={handlePasswordChange}
-                />
-              </Box>
-              
-              <Button style={style.button} onPress={handleLogin}>
-                <Text style={{ color: 'white', fontFamily: 'InterTight-SemiBold' }}>
-                  Login
-                </Text>
-              </Button>
-            </Center>
+            <TextInput
+              placeholder="Username"
+              style={{
+                width: '90%',
+                height: 35,
+                fontSize: 14,
+                color: '#000'
+              }}
+              value={userName}
+              onChangeText={handleUsernameChange}
+              onSubmitEditing={handleDoneAction}
+            />
           </Box>
           
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+          <Box
+            bg="white"
+            shadow={4}
+            rounded="lg"
+            width="90%"
+            marginBottom={4}
+            padding={2}
+          >
+            <TextInput
+              placeholder="Password"
+              style={{
+                width: '90%',
+                height: 35,
+                fontSize: 14,
+                color: '#000'
+              }}
+              value={userPassword}
+              secureTextEntry={true}
+              onChangeText={handlePasswordChange}
+              onSubmitEditing={handleLogin}
+            />
+          </Box>
+          
+          <Button style={style.button} onPress={handleLogin}>
+            <Text style={{ color: 'white', fontFamily: 'InterTight-SemiBold' }}>
+              Login
+            </Text>
+          </Button>
+        </Center>
+      </Box>
+      
+    </View>
+  </TouchableWithoutFeedback>
+</KeyboardAvoidingView>
   );
 };
 
