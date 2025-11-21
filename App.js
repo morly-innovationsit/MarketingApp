@@ -7,6 +7,7 @@ import SplashScreen from './src/Config/SplashScreen';
 import {Provider} from 'react-redux';
 import {store} from './src/store/store';
 import { AuthProvider } from './src/Config/AuthContext';
+import { PaperProvider } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCompany } from './src/screens/CompanySelection/Actions/fetchCompany';
 export default function App() {
@@ -26,7 +27,9 @@ export default function App() {
   return (
     <Provider store={store}> 
     <AuthProvider>
+      <PaperProvider>
       {isLoading ? <SplashScreen /> : <MyStackNavigator />}
+      </PaperProvider>
     </AuthProvider>
     </Provider>
   );
