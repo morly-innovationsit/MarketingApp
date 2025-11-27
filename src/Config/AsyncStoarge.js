@@ -6,8 +6,8 @@ export const storeUserData = async (token, username,co_code, userid) => {
   try {
     await AsyncStorage.setItem('userToken', token);
     await AsyncStorage.setItem('username', username);
-    await AsyncStorage.setItem('co_code', co_code);
-    await AsyncStorage.setItem('userid', userid);
+    await AsyncStorage.setItem('password', co_code);
+    await AsyncStorage.setItem('user_id', userid);
   } catch (error) {
     console.error('Error storing user data:', error);
   }
@@ -18,8 +18,8 @@ export const getUserData = async () => {
   try {
     const token = await AsyncStorage.getItem('userToken');
     const username = await AsyncStorage.getItem('username');
-    const co_code = await AsyncStorage.getItem('co_code');
-    const userid = await AsyncStorage.getItem('userid');
+    const co_code = await AsyncStorage.getItem('password');
+    const userid = await AsyncStorage.getItem('user_id');
     return { token, username, co_code, userid };
   } catch (error) {
     console.error('Error retrieving user data:', error);
@@ -57,8 +57,8 @@ export const clearUserData = async () => {
   try {
     await AsyncStorage.removeItem('userToken');
     await AsyncStorage.removeItem('username');
-    await AsyncStorage.removeItem('co_code');
-    await AsyncStorage.removeItem('userid');
+    await AsyncStorage.removeItem('password');
+    await AsyncStorage.removeItem('user_id');
 {/* <MyStackNavigator/> */}
   } catch (error) {
     console.error('Error clearing user data:', error);

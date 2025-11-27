@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { ScrollView, Image, Button, Text, Center, Box } from 'native-base';
 import { useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from 'react-redux';
-import { currentuser, loginAction } from '../../Login/Actions/loginAction';
+import {  loginAction } from '../Login/Action/loginAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import style from './style/loginstyle'
 import { AuthContext } from '../../Config/AuthContext';
@@ -19,27 +19,47 @@ const LoginScreen = ({ navigation }) => {
   const handleDoneAction = () => {
     console.log('Done button pressed');
   };
-
   const handleLogin = async () => {
     try {
-      // Instead of navigation.navigate('AddNew'), 
-      // authenticate the user through your context
-      // This will update userToken and automatically switch to AppStack
+      const response = await dispatch(loginAction(JSON.stringify({
+        "username": userName,
+        "password": userPassword,
       
-      // Example: If you have a login function in your context
-      login("some_user_token"); // Pass the actual token/user ID
-      
-      // Store other user data
-      storeUserArray("logineduser", userName);
-      storeUserArray("password", userPassword);
-      storeUserArray("user_id", "01");
-      
-      // The navigation will happen automatically when userToken is set
-      
+      })));
+    // console.log("response=================================", response.payload.data.username)
+      // Assuming response contains the user ID or token
+      if (response.payload.success) {
+      // console.log("response=================================", response.payload.data.username)
+      storeUserArray("logineduser", response.payload.data.username);
+      // storeUserArray("password", userPassword);
+      storeUserArray("user_id", response.payload.data.user_id);
+      login( response.payload.data.user_id)
+      }
+
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
+  // const handleLogin = async () => {
+  //   try {
+  //     // Instead of navigation.navigate('AddNew'), 
+  //     // authenticate the user through your context
+  //     // This will update userToken and automatically switch to AppStack
+      
+  //     // Example: If you have a login function in your context
+  //     login("some_user_token"); // Pass the actual token/user ID
+      
+  //     // Store other user data
+  //     storeUserArray("logineduser", userName);
+  //     storeUserArray("password", userPassword);
+  //     storeUserArray("user_id", "01");
+      
+  //     // The navigation will happen automatically when userToken is set
+      
+  //   } catch (error) {
+  //     console.error("Login failed:", error);
+  //   }
+  // };
   
   const handlePasswordChange = (text) => {
     setUserPassword(text);
@@ -65,8 +85,7 @@ const LoginScreen = ({ navigation }) => {
     }}>
       
       <Box
-        bg="white"
-      
+        bg="white"     
         shadow={4}
         rounded="lg"
         maxWidth="85%"

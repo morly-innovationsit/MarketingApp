@@ -9,6 +9,7 @@ import SplashScreen from '../Config/SplashScreen';
 import LoginScreen from '../screens/Login/LoginScreen';
 import AddNew from '../screens/AddNew/AddNew';
 import AddedList from '../screens/AddedList/AddedList'
+import LocationMapScreen from '../screens/Location/LocationMapScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -66,6 +67,7 @@ const MyStackNavigator = () => {
         {userToken ? (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Main" component={MyDrawer} />
+            <Stack.Screen name="LocationMapScreen" component={LocationMapScreen} />
           </Stack.Navigator>
         ) : (
           <Stack.Navigator screenOptions={{ headerShown: false }}>

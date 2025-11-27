@@ -11,12 +11,9 @@ export const loginAction = createAsyncThunk('login', async (resbody) => {
 
   try{
 
-  const res = await axiosInstance.post('user/login',resbody);
-  console.log("data from redux:",res.data.user_name)
-  // storeUserData('',res.data.user_name,res.data.co_code,res.data.user_id)
-   
-  //const final = await res.json();
-  // console.log("data from redux:",{...final})
+  const res = await axiosInstance.post('login',resbody);
+  console.log("data from reduxxx:",res)
+ 
    console.log("data from loginredux:",res.data)   
   return res.data;
 

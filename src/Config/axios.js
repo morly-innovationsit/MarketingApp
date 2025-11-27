@@ -8,7 +8,7 @@ const token = "";
 const axiosInstance = axios.create({
     baseURL: DevelopmentApi,
     headers: {
-         'Authorization': token ? `${token}` : '',
+        //  'Authorization': token ? `${token}` : '',
         'Content-Type': 'application/json',
     }
 });
