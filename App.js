@@ -1,15 +1,11 @@
-
 import React, { useEffect,useState } from 'react';
-import { NativeBaseProvider } from "native-base";
-import { mmmmNavigationContainer } from '@react-navigation/native';
 import MyStackNavigator from './src/stack/MyStackNavigator';
 import SplashScreen from './src/Config/SplashScreen';
 import {Provider} from 'react-redux';
-import {store} from './src/store/store';
+import store from './src/store/store';
 import { AuthProvider } from './src/Config/AuthContext';
 import { PaperProvider } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCompany } from './src/screens/CompanySelection/Actions/fetchCompany';
+
 export default function App() {
   const [isLoading, setIsLoading] = useState(true); // State to manage splash screen visibility
 
@@ -34,4 +30,3 @@ export default function App() {
     </Provider>
   );
 }
-

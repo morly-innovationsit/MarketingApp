@@ -26,7 +26,7 @@ const LoginScreen = ({ navigation }) => {
         "password": userPassword,
       
       })));
-    // console.log("response=================================", response.payload.data.username)
+    console.log("response=================================", response.payload.data.username)
       // Assuming response contains the user ID or token
       if (response.payload.success) {
       // console.log("response=================================", response.payload.data.username)

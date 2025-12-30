@@ -7,9 +7,7 @@
 <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-<meta-data
-  android:name="com.google.android.geo.API_KEY"
-  android:value="AIzaSyDPH0NI4GsA4729EvfkSo_edsWC4TcAyAE"/>
+
 
     <application
      android:usesCleartextTraffic="true"
@@ -20,8 +18,12 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme"
-  
       android:supportsRtl="true">
+
+    <meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="AIzaSyA-BaCmz8z4RgdkeAa3ToVFwV5d3yZVLpg"/>
+
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
@@ -34,5 +36,9 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+  
     </application>
+
+   
+  
 </manifest>

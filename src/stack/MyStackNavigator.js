@@ -10,7 +10,7 @@ import LoginScreen from '../screens/Login/LoginScreen';
 import AddNew from '../screens/AddNew/AddNew';
 import AddedList from '../screens/AddedList/AddedList'
 import LocationMapScreen from '../screens/Location/LocationMapScreen';
-
+import DetailPage from '../screens/AddedList/DetailPage'
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -68,6 +68,8 @@ const MyStackNavigator = () => {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Main" component={MyDrawer} />
             <Stack.Screen name="LocationMapScreen" component={LocationMapScreen} />
+            <Stack.Screen name="ListTab" component={AddedList} />
+            <Stack.Screen name="DetailPage" component={DetailPage} />
           </Stack.Navigator>
         ) : (
           <Stack.Navigator screenOptions={{ headerShown: false }}>
