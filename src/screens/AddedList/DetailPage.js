@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, ActivityIndicator, Text, RefreshControl, Image } from 'react-native';
+import { View, StyleSheet, FlatList, ActivityIndicator, Text, RefreshControl, Image, TouchableOpacity, Linking } from 'react-native';
 import { TextInput, Card } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { getList, getListbyName } from './Action/ViewListAction';
 import LocationMapScreen from '../Location/LocationMapScreen';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // or 'Ionicons'
 
 const DetailPage = ({ route }) => {
   const dispatch = useDispatch();
@@ -47,6 +48,12 @@ const DetailPage = ({ route }) => {
     }
   };
 
+  // Function to open location in Google Maps
+  const openInMaps = (lat, long) => {
+    const url = `https://www.google.com/maps/search/?api=1&query=${lat},${long}`;
+    Linking.openURL(url).catch(err => console.error('Error opening maps:', err));
+  };
+
   // Render each item
   const renderItem = ({ item }) => (
     <View style={styles.card}>
@@ -61,23 +68,44 @@ const DetailPage = ({ route }) => {
           />
         )}
 
-        {/* Pass saved coordinates to LocationMapScreen */}
-        <LocationMapScreen 
-          savedLat={item.lat}
-          savedLong={item.long}
-          visible={true}
-          onLocationChange={(latitude, longitude) => {
-            // This will update when user changes location
-            console.log("Location updated:", latitude, longitude);
-          }}
+        {/* Location Section with Coordinates Display */}
+        {item.lat && item.long && (
+          <View style={styles.locationSection}>
+            <View style={styles.locationHeader}>
+              <Icon name="map-marker" size={24} color="#6200ee" />
+              <Text style={styles.sectionTitle}>Location</Text>
+            </View>
+            
+            <View style={styles.coordinatesContainer}>
+              <View style={styles.coordinateRow}>
+                <Icon name="latitude" size={18} color="#666" />
+                <Text style={styles.coordinateLabel}>Latitude:</Text>
+                <Text style={styles.coordinateValue}>{item.lat}</Text>
+              </View>
+              <View style={styles.coordinateRow}>
+                <Icon name="longitude" size={18} color="#666" />
+                <Text style={styles.coordinateLabel}>Longitude:</Text>
+                <Text style={styles.coordinateValue}>{item.long}</Text>
+              </View>
+            </View>
+
          
-        />
-        
-        <Text style={styles.itemLabel}>Software: <Text style={styles.itemValue}>{item.software}</Text></Text>
-        {item.softwarename && (
-          <Text style={styles.itemLabel}>Software Name: <Text style={styles.itemValue}>{item.softwarename}</Text></Text>
+            {/* Open in Maps Button */}
+            <TouchableOpacity 
+              style={styles.mapsButton}
+              onPress={() => openInMaps(item.lat, item.long)}
+            >
+              <Icon name="google-maps" size={20} color="#fff" />
+              <Text style={styles.mapsButtonText}>Open in Google Maps</Text>
+            </TouchableOpacity>
+          </View>
         )}
-        <Text style={styles.itemLabel}>Satisfied: <Text style={styles.itemValue}>{item.satisfied}</Text></Text>
+        
+      {/* <Text style={styles.itemLabel}>Software: <Text style={styles.itemValue}>{item.software ? 'Yes' : 'No'}</Text></Text> */}
+{item.software && item.softwarename && (
+  <Text style={styles.itemLabel}>Software Name: <Text style={styles.itemValue}>{item.softwarename}</Text></Text>
+)}
+<Text style={styles.itemLabel}>Satisfied: <Text style={styles.itemValue}>{item.satisfied ? 'Yes' : 'No'}</Text></Text>
         {item.website && (
           <Text style={styles.itemLabel}>Website: <Text style={styles.itemValue}>{item.website}</Text></Text>
         )}
@@ -200,6 +228,57 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#333',
   },
+  locationSection: {
+    marginVertical: 12,
+    padding: 12,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+  },
+  locationHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  coordinatesContainer: {
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 6,
+    marginBottom: 12,
+  },
+  coordinateRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  coordinateLabel: {
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '600',
+    marginLeft: 8,
+    marginRight: 6,
+  },
+  coordinateValue: {
+    fontSize: 14,
+    color: '#333',
+    fontWeight: '400',
+  },
+  mapsButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#6200ee',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  mapsButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+    marginLeft: 8,
+  },
   contactSection: {
     marginTop: 12,
     paddingTop: 12,
@@ -210,6 +289,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 8,
+    marginLeft: 8,
     color: '#6200ee',
   },
   imagesContainer: {
@@ -220,7 +300,7 @@ const styles = StyleSheet.create({
   },
   additionalImage: {
     width: '100%',
-    height: 400,
+    height: 260,
     marginBottom: 8,
     borderRadius: 8,
   },

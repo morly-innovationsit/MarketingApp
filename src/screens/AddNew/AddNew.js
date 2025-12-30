@@ -8,6 +8,7 @@ import LocationMapScreen from '../Location/LocationMapScreen';
 import RNFS from 'react-native-fs';
 import { AddnewAction } from './Action/AddnewAction';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 const AddNew = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -46,13 +47,13 @@ const AddNew = () => {
   const [visitingCard4, setVisitingCard4] = useState(null);
 
     const dispatch = useDispatch();
-
+const navigation = useNavigation();
 // Update the imagePickerOptions to be lower quality
 const imagePickerOptions = {
   mediaType: 'photo',
-  quality: 0.5, // Reduced from 1 to 0.5 (50% quality)
-  maxWidth: 800, // Reduced from 1000
-  maxHeight: 800, // Reduced from 1000
+  quality: 0.3, // Reduced from 1 to 0.5 (50% quality)
+  maxWidth: 400, // Reduced from 1000
+  maxHeight: 400, // Reduced from 1000
   includeBase64: true,
 };
 
@@ -242,14 +243,15 @@ const saveDetails = async () => {
       "image": imagesArray
     }));
 
-    const result = await response.json();
-
-    if (response.ok) {
+  
+    console.log("result of save ", response?.payload?.success)
+    if (response?.payload?.success) {
       Alert.alert('Success', 'Details saved successfully!', [
         {
           text: 'OK',
           onPress: () => {
             resetForm();
+             navigation.navigate('AddNewDrawer');
           },
         },
       ]);
@@ -319,7 +321,7 @@ const saveDetails = async () => {
 
           <View>
   <LocationMapScreen 
-  visible={false}
+
     onLocationChange={(latitude, longitude) => {
       setLat(latitude.toString());
       setLong(longitude.toString());
