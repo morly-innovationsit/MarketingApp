@@ -69,7 +69,13 @@ const MyStackNavigator = () => {
             <Stack.Screen name="Main" component={MyDrawer} />
             <Stack.Screen name="LocationMapScreen" component={LocationMapScreen} />
             <Stack.Screen name="ListTab" component={AddedList} />
-            <Stack.Screen name="DetailPage" component={DetailPage} />
+            <Stack.Screen name="DetailPage" component={DetailPage} 
+              options={{
+    title: 'Details',
+    headerShown: true,
+    headerBackTitle: 'Back',
+    headerBackVisible: true,
+  }}/>
           </Stack.Navigator>
         ) : (
           <Stack.Navigator screenOptions={{ headerShown: false }}>

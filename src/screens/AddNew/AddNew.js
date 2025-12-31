@@ -9,6 +9,7 @@ import RNFS from 'react-native-fs';
 import { AddnewAction } from './Action/AddnewAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { Platform } from 'react-native';
 const AddNew = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -49,23 +50,50 @@ const AddNew = () => {
     const dispatch = useDispatch();
 const navigation = useNavigation();
 // Update the imagePickerOptions to be lower quality
-const imagePickerOptions = {
-  mediaType: 'photo',
-  quality: 0.3, // Reduced from 1 to 0.5 (50% quality)
-  maxWidth: 400, // Reduced from 1000
-  maxHeight: 400, // Reduced from 1000
-  includeBase64: true,
-};
+// const imagePickerOptions = {
+//   mediaType: 'photo',
+//   quality: 0.3, // Reduced from 1 to 0.5 (50% quality)
+//   maxWidth: 400, // Reduced from 1000
+//   maxHeight: 400, // Reduced from 1000
+//   includeBase64: true,
+// };
 
 // Add a separate configuration for board photo with even lower quality
-const boardPhotoPickerOptions = {
+// const boardPhotoPickerOptions = {
+//   mediaType: 'photo',
+//   quality: 0.3, // Lower quality for board photo
+//   maxWidth: 600, // Smaller dimensions
+//   maxHeight: 600,
+//   includeBase64: true,
+// };
+
+
+// iOS-specific image picker options with aggressive compression
+const imagePickerOptions = {
   mediaType: 'photo',
-  quality: 0.3, // Lower quality for board photo
-  maxWidth: 600, // Smaller dimensions
-  maxHeight: 600,
+  quality: Platform.OS === 'ios' ? 0.2 : 0.3, // Lower quality for iOS
+  maxWidth: Platform.OS === 'ios' ? 300 : 400, // Smaller dimensions for iOS
+  maxHeight: Platform.OS === 'ios' ? 300 : 400,
   includeBase64: true,
+  // iOS-specific compression options
+  ...(Platform.OS === 'ios' && {
+    videoQuality: 'low',
+    cameraType: 'back',
+  }),
 };
 
+// Board photo with even more aggressive compression for iOS
+const boardPhotoPickerOptions = {
+  mediaType: 'photo',
+  quality: Platform.OS === 'ios' ? 0.2 : 0.3, // Very low quality for iOS
+  maxWidth: Platform.OS === 'ios' ? 400 : 600, // Smaller for iOS
+  maxHeight: Platform.OS === 'ios' ? 400 : 600,
+  includeBase64: true,
+  ...(Platform.OS === 'ios' && {
+    videoQuality: 'low',
+    cameraType: 'back',
+  }),
+};
   // Convert image URI to base64
   const convertToBase64 = async (imageUri) => {
     try {

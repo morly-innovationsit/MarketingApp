@@ -80,6 +80,7 @@ const AddedList = ({ navigation }) => {
         keyExtractor={(item) => item._id}
         ListEmptyComponent={renderEmpty}
         contentContainerStyle={list?.length === 0 && styles.emptyList}
+        bounces={true} 
         refreshControl={
           <RefreshControl
             refreshing={loading}
